@@ -15,8 +15,6 @@ let perPage = 40;
 let page = 0;
 let name = searchQuery.value;
 
-// Needed to hide "load more" and "close" buttons
-
 loadBtn.style.display = 'none';
 closeBtn.style.display = 'none';
 
@@ -110,8 +108,6 @@ function renderGallery(name) {
   gallery.insertAdjacentHTML('beforeend', markup);
 }
 
-// Load more button - function
-
 loadBtn.addEventListener(
   'click',
   () => {
@@ -131,7 +127,5 @@ loadBtn.addEventListener(
   },
   true
 );
-
-// Preloader
 
 window.addEventListener('load', fadeEffect);
