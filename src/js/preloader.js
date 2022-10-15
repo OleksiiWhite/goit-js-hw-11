@@ -1,4 +1,5 @@
 const preloader = document.querySelector('.preloader');
+
 const fadeEffect = () => {
   setInterval(() => {
     if (!preloader.style.opacity) {
