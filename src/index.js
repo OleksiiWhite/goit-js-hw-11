@@ -4,6 +4,7 @@ import Notiflix from 'notiflix';
 
 import { fadeEffect } from './js/preloader';
 import { fetchImages } from './js/fetchImages';
+import { createGalery } from './js/creategalery';
 
 const searchQuery = document.querySelector('input[name="searchQuery"]');
 const closeBtn = document.querySelector('.close-btn');
@@ -60,51 +61,7 @@ async function eventHandler(e) {
 searchForm.addEventListener('submit', eventHandler);
 
 function renderGallery(name) {
-  const markup = name.hits
-    .map(hit => {
-      return `<div class="photo-card">
-
-        <a class="gallery-item" href="${hit.largeImageURL}">
-          <img
-            class="gallery__image"
-            src="${hit.webformatURL}"
-            alt="${hit.tags}"
-            loading="lazy"
-        /></a>
-
-        <div class="info">
-          <div class="info__box">
-            <p class="info-item">
-              <b class="material-symbols-outlined">thumb_up</b>
-            </p>
-            <p class="info-counter">${hit.likes.toLocaleString()}</p>
-          </div>
-
-          <div class="info__box">
-            <p class="info-item">
-              <b class="material-symbols-outlined">visibility</b>
-            </p>
-            <p class="info-counter">${hit.views.toLocaleString()}</p>
-          </div>
-
-          <div class="info__box">
-            <p class="info-item">
-              <b class="material-symbols-outlined">forum</b>
-            </p>
-            <p class="info-counter">${hit.comments.toLocaleString()}</p>
-          </div>
-
-          <div class="info__box">
-            <p class="info-item">
-              <b class="material-symbols-outlined">download</b>
-            </p>
-            <p class="info-counter">${hit.downloads.toLocaleString()}</p>
-          </div>
-
-        </div>
-      </div>`;
-    })
-    .join('');
+  const markup = name.hits.map(createGalery).join('');
   gallery.insertAdjacentHTML('beforeend', markup);
 }
 
