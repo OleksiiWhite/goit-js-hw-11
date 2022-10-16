@@ -1,3 +1,4 @@
+// make gallery
 function createGalery(hit) {
   return `<div class="photo-card">
 
