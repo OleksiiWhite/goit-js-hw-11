@@ -14,22 +14,27 @@ const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
 const loadBtn = document.querySelector('.load-more');
 
-const searchTerm = searchBox.value.trim();
-
 let perPage = 40;
 let page = 0;
-let name = searchQuery.value;
+let name = searchQuery.value.trim().toLowerCase();
 
 loadBtn.style.display = 'none';
 closeBtn.style.display = 'none';
 
 async function eventHandler(e) {
   e.preventDefault();
+
   gallery.innerHTML = '';
   loadBtn.style.display = 'none';
 
   page = 1;
-  name = searchQuery.value;
+  name = searchQuery.value.trim().toLowerCase();
+
+  if (name === '') {
+    Notiflix.Notify.failure('Enter a search query!');
+    return;
+  }
+
   fetchImages(name, page, perPage)
     .then(name => {
       let totalPages = name.totalHits / perPage;
@@ -59,11 +64,7 @@ async function eventHandler(e) {
         gallery.innerHTML = '';
       }
     })
-    .catch(error => {
-      if (searchTerm !== '') {
-        Notiflix.Notify.failure('Oops, there is no images with that name');
-      }
-    });
+    .catch(error => console.log('ERROR: ' + error));
 }
 
 searchForm.addEventListener('submit', eventHandler);
@@ -76,7 +77,7 @@ function renderGallery(name) {
 loadBtn.addEventListener(
   'click',
   () => {
-    name = searchQuery.value;
+    // name = searchQuery.value;
     page += 1;
     fetchImages(name, page, perPage).then(name => {
       let totalPages = name.totalHits / perPage;
