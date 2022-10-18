@@ -14,6 +14,8 @@ const searchForm = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
 const loadBtn = document.querySelector('.load-more');
 
+const searchTerm = searchBox.value.trim();
+
 let perPage = 40;
 let page = 0;
 let name = searchQuery.value;
@@ -57,7 +59,11 @@ async function eventHandler(e) {
         gallery.innerHTML = '';
       }
     })
-    .catch(error => console.log('ERROR: ' + error));
+    .catch(error => {
+      if (searchTerm !== '') {
+        Notiflix.Notify.failure('Oops, there is no images with that name');
+      }
+    });
 }
 
 searchForm.addEventListener('submit', eventHandler);
